@@ -2,8 +2,9 @@ window.onload=function() {
     canv=document.getElementById("gc");
     ctx=canv.getContext("2d");
     document.addEventListener("keydown",keyPush);
-    setInterval(game,80);
+    setInterval(game,70);
 }
+var move = 0;
 var x = 200;
 px=py= 10;
 gs=tc=20;
@@ -40,7 +41,7 @@ function game() {
     }
     trail.push({x:px,y:py});
     while(trail.length>tail) {
-    trail.shift();
+        trail.shift();
     }
 	// console.log(tail.toString());
     if(ax==px && ay==py) {
@@ -50,22 +51,6 @@ function game() {
     }
     ctx.fillStyle="red";
     ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
-}
-function keyPush(evt) {
-    switch(evt.keyCode) {
-        case 37:
-            xv=-1;yv=0;
-            break;
-        case 38:
-            xv=0;yv=-1;
-            break;
-        case 39:
-            xv=1;yv=0;
-            break;
-        case 40:
-            xv=0;yv=1;
-            break;
-    }
 	document.getElementById("controls_score-label").innerHTML = tail - 5;
 	if( tail - 5 > high ){
 		high = tail - 5;	
@@ -79,6 +64,51 @@ function keyPush(evt) {
 	// 	clearInterval(x);
 	// 	setInterval(game,x);
 	// }
+
+}
+function keyPush(evt) {
+    switch(evt.keyCode) {
+        case 37://left
+            if(move == 39){
+                xv=1;yv=0;
+                break;
+            } 
+            else{    
+                move = 37;
+                xv=-1;yv=0;
+                break;
+            }
+        case 38://up
+            if(move == 40){
+                xv=0;yv=1;
+                break;
+            }
+            else{
+                move = 38;                
+                xv=0;yv=-1;
+                break;
+            }
+        case 39://right
+            if(move == 37){
+                xv=-1;yv=0;
+                break;
+            }
+            else {
+                move = 39;
+                xv=1;yv=0;
+                break;
+            }
+        case 40://down
+            if(move == 38){
+                xv = 0;yv =-1;
+                break;
+            }
+            else{
+                move = 40;
+                xv=0;yv=1;
+                break;        
+            }
+        }
 
 
 }
